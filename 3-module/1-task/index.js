@@ -6,8 +6,6 @@
  */
 function showSalary(data, age) {
   
-  let newData = data.filter(person => (person.age <= age));
-  let result = newData.map(person => (`${person.name}, ${person.balance}`));
-  return result.join('\n');
+  return data.filter(person => (person.age <= 21)).map(person => (${person.name}, ${person.age})).join(‘\n’);
 
 }
