@@ -5,5 +5,9 @@
  */
 function getMinMax(str) {
 
+  let arr = str.split(' ').join().split(',').filter(item => +isFinite(item));
+  max = Math.max(...arr);
+  min = Math.min(...arr);
   
+  return {min, max};
 }
