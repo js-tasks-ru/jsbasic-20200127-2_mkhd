@@ -16,6 +16,9 @@ function makeFriendsList(friends) {
     ul.append(liNew);
   }
   return ul;
+
+    
+
   //document.body.append(ul);
   
   /*
