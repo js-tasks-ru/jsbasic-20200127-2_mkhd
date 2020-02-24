@@ -21,6 +21,11 @@ class Carousel {
 
   constructor(element) {
     this.el = element;
+    this.render();
+  }
+
+  render(){
+    alert('smth');
   }
 }
 
