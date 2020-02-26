@@ -22,13 +22,10 @@ class Carousel {
   constructor(element) {
     this.el = element;
     this.carouselItemNumber = 0; // инициализируем начальный слайд
-    this.renderCarouselOuter();
-    this.renderCarouselInner(this.carouselItemNumber);    
-
-   // this.el.addEventListener('click', event2 => this.scrollCarouselIndicators(event2));
-    this.el.addEventListener('click', event => this.scrollCarousel(event));
-
-    
+    this.renderCarouselOuter();  // рисуем наружку слайдера
+    this.renderCarouselInner(this.carouselItemNumber);    // рисуем первый слайд
+    this.checkIndicator(this.carouselItemNumber); // отмечаем нужный индикатор-кружочек, изначально - первый
+    this.el.addEventListener('click', event => this.scrollCarousel(event)); // вешаем обработчик клика
   }
 
   renderCarouselOuter(){
@@ -77,42 +74,44 @@ class Carousel {
   scrollCarousel(event){
     
     let length = +this.slides.length -1;
+    if(event.target.tagName != 'LI'){
+      let btnClicked = event.target.closest('button');
+    
+      if (btnClicked.getAttribute('data-slide') === 'next') {     
+        if(this.carouselItemNumber < length) {
+          this.carouselItemNumber++;
+        } else {
+          this.carouselItemNumber = 0;
+        }        
+      }
 
-    if (event.target.getAttribute('data-slide') === 'next') {     
-      //alert('next');
-      if(this.carouselItemNumber < length) {
-        this.carouselItemNumber++;
-      } else {
-        this.carouselItemNumber = 0;
-      }        
-    }
-
-    if (event.target.getAttribute('data-slide') === 'prev') {
-      //alert('prev');
-      if(this.carouselItemNumber == 0) {
-        this.carouselItemNumber = length;
-      } else {
-        this.carouselItemNumber--;
-      }      
-    }
-
-    if (event.target.getAttribute('data-slide-to') === '0') {
-      this.carouselItemNumber = 0;   
-      //alert('0'); 
-    }
-    if (event.target.getAttribute('data-slide-to') === '1') {
-      this.carouselItemNumber = 1;    
-      //alert('1');
-    }
-    if (event.target.getAttribute('data-slide-to') === '2') {
-      //alert('2');
-      this.carouselItemNumber = 2;    
-    }
-
-    this.renderCarouselInner(this.carouselItemNumber);    
+      if (btnClicked.getAttribute('data-slide') === 'prev') {
+        //alert('prev');
+        if(this.carouselItemNumber == 0) {
+          this.carouselItemNumber = length;
+        } else {
+          this.carouselItemNumber--;
+        }      
+      }
+    } else {
+    // проверка номера индикатора (кружочки)
+      let slideNumber = event.target.getAttribute('data-slide-to');
+      if (slideNumber >= 0 && slideNumber < this.slides.length) {
+        this.carouselItemNumber = slideNumber;
+      }
+    }     
+    this.renderCarouselInner(this.carouselItemNumber); 
+    this.checkIndicator(this.carouselItemNumber);
   }
 
-  
+  checkIndicator(itemNumber){
+
+    let elements = document.getElementsByClassName('carousel-indicator');
+    for(let element of elements){
+      element.classList.remove('active')
+    }
+    elements[itemNumber].classList.add('active');
+  }  
 
 }
 
