@@ -52,7 +52,7 @@ class Carousel {
   }
 
   renderCarouselInner(itemNumber){
-    let container = document.getElementById('carousel-inner');
+    let container = this.el.getElementsByClassName('carousel-inner')[0];
     container.innerHTML = `
       <div class="carousel-item active">
       <img src="assets/images/default-slide-img.jpg" alt="Activelide">
@@ -74,7 +74,9 @@ class Carousel {
   scrollCarousel(event){
     
     let length = +this.slides.length -1;
+
     if(event.target.tagName != 'LI'){
+      // если нажатие на стрелочки
       let btnClicked = event.target.closest('button');
     
       if (btnClicked.getAttribute('data-slide') === 'next') {     
@@ -94,7 +96,8 @@ class Carousel {
         }      
       }
     } else {
-    // проверка номера индикатора (кружочки)
+      // если нажатие на кружочки
+      // проверка номера индикатора (кружочка)
       let slideNumber = event.target.getAttribute('data-slide-to');
       if (slideNumber >= 0 && slideNumber < this.slides.length) {
         this.carouselItemNumber = slideNumber;
@@ -106,7 +109,7 @@ class Carousel {
 
   checkIndicator(itemNumber){
 
-    let elements = document.getElementsByClassName('carousel-indicator');
+    let elements = this.el.getElementsByClassName('carousel-indicator');
     for(let element of elements){
       element.classList.remove('active')
     }
