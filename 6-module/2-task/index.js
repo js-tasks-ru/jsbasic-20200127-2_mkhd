@@ -25,7 +25,9 @@ class Carousel {
     this.renderCarouselOuter();
     this.renderCarouselInner(this.carouselItemNumber);    
 
+   // this.el.addEventListener('click', event2 => this.scrollCarouselIndicators(event2));
     this.el.addEventListener('click', event => this.scrollCarousel(event));
+
     
   }
 
@@ -76,8 +78,8 @@ class Carousel {
     
     let length = +this.slides.length -1;
 
-    if (event.target.className === 'carousel-control-next') {     
-      
+    if (event.target.getAttribute('data-slide') === 'next') {     
+      //alert('next');
       if(this.carouselItemNumber < length) {
         this.carouselItemNumber++;
       } else {
@@ -85,8 +87,8 @@ class Carousel {
       }        
     }
 
-    if (event.target.className === 'carousel-control-prev') {
-     
+    if (event.target.getAttribute('data-slide') === 'prev') {
+      //alert('prev');
       if(this.carouselItemNumber == 0) {
         this.carouselItemNumber = length;
       } else {
@@ -94,12 +96,23 @@ class Carousel {
       }      
     }
 
-    if (event.target.className === 'carousel-indicators') alert('indicators!');
+    if (event.target.getAttribute('data-slide-to') === '0') {
+      this.carouselItemNumber = 0;   
+      //alert('0'); 
+    }
+    if (event.target.getAttribute('data-slide-to') === '1') {
+      this.carouselItemNumber = 1;    
+      //alert('1');
+    }
+    if (event.target.getAttribute('data-slide-to') === '2') {
+      //alert('2');
+      this.carouselItemNumber = 2;    
+    }
 
-    this.renderCarouselInner(this.carouselItemNumber);
-
-    
+    this.renderCarouselInner(this.carouselItemNumber);    
   }
+
+  
 
 }
 
