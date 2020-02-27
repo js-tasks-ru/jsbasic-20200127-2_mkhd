@@ -30,15 +30,14 @@ class Menu {
     this.renderMenu();
     let parentMenuElements = this.el.querySelectorAll("ul .dropdown");
     let menuElements = this.el.querySelectorAll("ul li .dropdown-menu");
-    let sidebar = this.el.getElementsByClassName("sidebar")[0];
+    let sidebar = this.el.getElementsByClassName("dropdown");
     
     for (let i=0; i < parentMenuElements.length; i++){
       parentMenuElements[i].addEventListener('pointerenter', event => this.renderDropdown(event, i, menuElements));  
       parentMenuElements[i].addEventListener('pointerleave', event => this.unrenderDropdown(event, i, menuElements));  
-    }    
-    sidebar.addEventListener('pointerenter', (event) => this.showhideBackdrop(event, 0));
-    sidebar.addEventListener('pointerleave', (event) => this.showhideBackdrop(event, 1));
-  
+      sidebar[i].addEventListener('pointerenter', (event) => this.showhideBackdrop(event, 0));
+      sidebar[i].addEventListener('pointerleave', (event) => this.showhideBackdrop(event, 1));
+    }        
   }
 
   renderMenu() {
