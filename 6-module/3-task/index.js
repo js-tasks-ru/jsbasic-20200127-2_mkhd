@@ -26,7 +26,31 @@ class Menu {
   `;
 
   constructor(element) {
+    this.el = element;
+    this.renderMenu();
+    let parentMenuElements = this.el.querySelectorAll("ul .dropdown");
+    let menuElements = this.el.querySelectorAll("ul li .dropdown-menu");
+    
+    for (let i=0; i < parentMenuElements.length; i++){
+      parentMenuElements[i].addEventListener('pointerenter', event => this.renderDropdown(event, i, menuElements));  
+      parentMenuElements[i].addEventListener('pointerleave', event => this.unrenderDropdown(event, i, menuElements));  
+    }    
   }
+
+  renderMenu(){
+    this.el.insertAdjacentHTML('beforeend', this.template);
+  }
+
+  renderDropdown(event, i, menuElems){
+    menuElems[i].classList.add('show'); 
+
+  } 
+  unrenderDropdown(event, i, menuElems){
+    menuElems[i].classList.remove('show'); 
+
+  } 
+  
+
 }
 
 // Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
