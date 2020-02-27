@@ -52,7 +52,7 @@ class Carousel {
   }
 
   renderCarouselInner(itemNumber){
-    let container = this.el.getElementsByClassName('carousel-inner')[0];
+    let container = this.el.querySelector("div .carousel-inner");
     container.innerHTML = `
       <div class="carousel-item active">
       <img src="assets/images/default-slide-img.jpg" alt="Activelide">

@@ -26,7 +26,45 @@ class Menu {
   `;
 
   constructor(element) {
+    this.el = element;
+    this.renderMenu();
+    let parentMenuElements = this.el.querySelectorAll("ul .dropdown");
+    let menuElements = this.el.querySelectorAll("ul li .dropdown-menu");
+    let sidebar = this.el.getElementsByClassName("dropdown");
+    
+    for (let i=0; i < parentMenuElements.length; i++){
+      parentMenuElements[i].addEventListener('pointerenter', event => this.renderDropdown(event, i, menuElements));  
+      parentMenuElements[i].addEventListener('pointerleave', event => this.unrenderDropdown(event, i, menuElements));  
+      sidebar[i].addEventListener('pointerenter', (event) => this.showhideBackdrop(event, 0));
+      sidebar[i].addEventListener('pointerleave', (event) => this.showhideBackdrop(event, 1));
+    }        
   }
+
+  renderMenu() {
+    this.el.insertAdjacentHTML('beforeend', this.template);
+  }
+
+  renderDropdown(event, i, menuElems) {
+    menuElems[i].classList.add('show'); 
+  } 
+
+  unrenderDropdown(event, i, menuElems) {
+    menuElems[i].classList.remove('show'); 
+  } 
+
+  showhideBackdrop(event, showBackdrop) {
+    //alert(showBackdrop);
+    if ( showBackdrop ) {
+      document.getElementsByClassName('backdrop')[0].classList.remove('show');
+      //alert('show');
+    } else {
+      document.getElementsByClassName('backdrop')[0].classList.add('show');
+
+    }
+    
+  }
+  
+
 }
 
 // Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
