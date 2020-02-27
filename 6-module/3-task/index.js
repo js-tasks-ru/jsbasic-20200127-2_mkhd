@@ -35,20 +35,34 @@ class Menu {
       parentMenuElements[i].addEventListener('pointerenter', event => this.renderDropdown(event, i, menuElements));  
       parentMenuElements[i].addEventListener('pointerleave', event => this.unrenderDropdown(event, i, menuElements));  
     }    
+    this.el.addEventListener('pointerenter', (event) => this.showhideBackdrop(event, 0));
+    this.el.addEventListener('pointerleave', (event) => this.showhideBackdrop(event, 1));
+  
   }
 
-  renderMenu(){
+  renderMenu() {
     this.el.insertAdjacentHTML('beforeend', this.template);
   }
 
-  renderDropdown(event, i, menuElems){
+  renderDropdown(event, i, menuElems) {
     menuElems[i].classList.add('show'); 
-
   } 
-  unrenderDropdown(event, i, menuElems){
+
+  unrenderDropdown(event, i, menuElems) {
     menuElems[i].classList.remove('show'); 
-
   } 
+
+  showhideBackdrop(event, showBackdrop) {
+    //alert(showBackdrop);
+    if ( showBackdrop ) {
+      document.getElementsByClassName('backdrop')[0].classList.remove('show');
+      //alert('show');
+    } else {
+      document.getElementsByClassName('backdrop')[0].classList.add('show');
+
+    }
+    
+  }
   
 
 }
