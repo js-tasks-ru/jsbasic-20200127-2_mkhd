@@ -4,10 +4,11 @@ class ProductList {
 
   constructor(element) {
     this.el = element;    
+    this.el.addEventListener('click', event => this.addToCart(event));
   }
 
   show() {    
-    fetch(this.productsUrl, {
+    return fetch(this.productsUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8' 
@@ -42,7 +43,7 @@ class ProductList {
     
     for (let product in products) {
       let productCode = `
-        <div data-product-id="1" class="products-list-product col-md-6 col-lg-4 mb-4">
+        <div data-product-id="${products[product].id}" class="products-list-product col-md-6 col-lg-4 mb-4">
         <div class="card">
           <div class="card-img-wrap">
             <img class="card-img-top" src="${products[product].imageUrl}" alt="Card image cap"></div>
@@ -60,7 +61,7 @@ class ProductList {
                   ${ products[product].oldPrice ? products[product].oldPrice : ''} 
                   ${ products[product].oldPrice ? '</small>' : ''}
               </p>
-              <button class="product-add-to-cart" data-button-role="add-to-cart">
+              <button class="product-add-to-cart" data-button-role="add-to-cart" item-id="${products[product].id}">
                   Add to cart
               </button>
           </div>
@@ -77,7 +78,7 @@ class ProductList {
       if (products[product].rating) {
         for (let i=0; i<5; i++) {
           container[product].insertAdjacentHTML('beforeend', `<i class="icon-star
-            ${products[product].rating.stars>i ? ' checked' : ' active' }
+            ${products[product].rating.stars > i ? ' checked' : ' active' }
           ">`);
         }               
         container[product].insertAdjacentHTML('beforeend', `<span class="rate-amount ml-2">
@@ -86,6 +87,20 @@ class ProductList {
         );
       } 
     }
+  }
+
+  addToCart(event) {
+    if (event.target.tagName == 'BUTTON') {
+      if (confirm('Вы уверены, что хотите добавить этот товар в корзину?')) {
+        let itemId = event.target.getAttribute('item-id');
+        //localStorage.setItem(this.productsStoreKey, '1');
+
+      } else {
+        return false;
+      }     
+      
+    }
+
   }
 
 
