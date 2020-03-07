@@ -4,7 +4,9 @@ class ProductList {
 
   constructor(element) {
     this.el = element;
-    fetch(’/assets/data/products.json’).then().catch();
+    fetch(’/assets/data/products.json’)
+      .then(response => response.json())
+      .catch(err => console.log(err));
     //this.show();
   }
 
