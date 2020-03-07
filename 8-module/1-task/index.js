@@ -4,6 +4,11 @@ class ProductList {
 
   constructor(element) {
     this.el = element;
+    //this.products = {};
+    
+  }
+
+  show() {    
     fetch(this.productsUrl, {
       method: 'POST',
       headers: {
@@ -13,17 +18,14 @@ class ProductList {
     })
     .then((response) => response.json())
     .then((result) => {
-      //console.log('Результат мы получим позже через какое-то время: ', result);
+      console.log('Результат: ', result);
       //this.products = result;
-      this.products = Object.assign({}, result);
-      console.log(this.products);
+      this.products = result;
+      this.renderOuter();
+      this.renderProduct(result);
+  
     });
-  }
 
-  show() {    
-    this.renderOuter();
-    this.renderProduct();
-    console.log(this.products);
   }
 
   renderOuter() {
@@ -39,32 +41,38 @@ class ProductList {
     this.el.insertAdjacentHTML('beforeend', outerTemplate);
   }
 
-  renderProduct() {
+  renderProduct(products) {
     let container = this.el.querySelector("div .homepage-cards");
-    container.innerHTML = `<div data-product-id="1" class="products-list-product col-md-6 col-lg-4 mb-4">
-    <div class="card">
-      <div class="card-img-wrap">
-            <img class="card-img-top" src="https://iliakan.github.io/course-project/assets/images/turntable.png" alt="Card image cap">
-      </div>
-      <div class="card-body">
-            <h5 class="card-title">Victrola Pro USB Bluetooth Turntable Vinyl to MP3 Function</h5>
-            <div class="rate">
-                <i class="icon-star checked"></i>
-                <i class="icon-star checked"></i>
-                <i class="icon-star checked"></i>
-                <i class="icon-star checked"></i>
-                <i class="icon-star checked"></i>
-                <span class="rate-amount ml-2">24</span>
-            </div>
-            <p class="card-text price-text discount"><strong>€ 129.92</strong>
-            <small class="ml-2">€ 250</small></p>
+    
+    for (let product in products) {
 
-            <button class="product-add-to-cart" data-button-role="add-to-cart">
-              Add to cart
-            </button>
-      </div>
-      </div>
-    </div>`;
+      let productCode = `<div data-product-id="1" class="products-list-product col-md-6 col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-img-wrap">
+              <img class="card-img-top" src="${products[product].imageUrl}" alt="Card image cap">
+        </div>
+        <div class="card-body">
+              <h5 class="card-title">${products[product].title}</h5>
+              <div class="rate">
+                  <i class="icon-star checked"></i>
+                  <i class="icon-star checked"></i>
+                  <i class="icon-star checked"></i>
+                  <i class="icon-star checked"></i>
+                  <i class="icon-star checked"></i>
+                  <span class="rate-amount ml-2">24</span>
+              </div>
+              <p class="card-text price-text discount"><strong>€ 129.92</strong>
+              <small class="ml-2">€ 250</small></p>
+
+              <button class="product-add-to-cart" data-button-role="add-to-cart">
+                Add to cart
+              </button>
+        </div>
+        </div>
+      </div>`;
+
+      container.insertAdjacentHTML('beforeend', productCode);
+    }
   }
 }
 
