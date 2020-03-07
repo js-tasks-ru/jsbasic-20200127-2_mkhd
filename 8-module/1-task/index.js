@@ -4,19 +4,26 @@ class ProductList {
 
   constructor(element) {
     this.el = element;
-    fetch('/assets/data/products.json')
-      .then(response => {
-        response.json();
-        //alert(response[0]);
-      })
-      .catch(err => console.log(err));
-    
+    fetch(this.productsUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8' 
+      },
+      body: JSON.stringify(this.productsStoreKey)
+    })
+    .then((response) => response.json())
+    .then((result) => {
+      //console.log('Результат мы получим позже через какое-то время: ', result);
+      //this.products = result;
+      this.products = Object.assign({}, result);
+      console.log(this.products);
+    });
   }
 
-  show() {
-    
+  show() {    
     this.renderOuter();
     this.renderProduct();
+    console.log(this.products);
   }
 
   renderOuter() {
@@ -33,7 +40,6 @@ class ProductList {
   }
 
   renderProduct() {
-    
     let container = this.el.querySelector("div .homepage-cards");
     container.innerHTML = `<div data-product-id="1" class="products-list-product col-md-6 col-lg-4 mb-4">
     <div class="card">
