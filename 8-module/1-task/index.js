@@ -8,16 +8,16 @@ class ProductList {
 
   show() {    
     fetch(this.productsUrl, {
-      method: 'POST',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8' 
-      },
-      body: JSON.stringify(this.productsStoreKey)
+      }
+      //body: JSON.stringify(this.productsStoreKey)
     })
     .then((response) => response.json())
     .then((result) => {
       console.log('Результат: ', result);
-      this.products = result;
+      //this.products = result;
       this.renderOuter();
       this.renderProduct(result);  
       this.renderReviews(result);
