@@ -13,7 +13,7 @@ class ProductList {
       headers: {
         'Content-Type': 'application/json;charset=utf-8' 
       }
-      //body: JSON.stringify(this.productsStoreKey)
+      //body: JSON.stringify()
     })
     .then((response) => response.json())
     .then((result) => {
@@ -89,7 +89,8 @@ class ProductList {
     if (event.target.tagName == 'BUTTON') {
       if (confirm('Вы уверены, что хотите добавить этот товар в корзину?')) {
         let itemId = event.target.getAttribute('item-id');
-        localStorage.setItem(this.productsStoreKey, );
+        localStorage.setItem(this.productsStoreKey, itemId);
+        alert(localStorage.length);  
 
       } else {
         return false;
