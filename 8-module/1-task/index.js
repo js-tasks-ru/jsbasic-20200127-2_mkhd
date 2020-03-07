@@ -49,11 +49,7 @@ class ProductList {
             <img class="card-img-top" src="${products[product].imageUrl}" alt="Card image cap"></div>
             <div class="card-body">
               <h5 class="card-title">${products[product].title}</h5>
-              <div class="rate">
-                  <!-- <i class="icon-star checked"></i> <i class="icon-star checked"></i> <i
-                  class="icon-star checked"></i> <i class="icon-star checked"></i> <i
-                  class="icon-star"></i> -->
-                  
+              <div class="rate">                  
               </div>
               <p class="card-text price-text ${ products[product].oldPrice ? 'discount' : ''}">
                   <strong>${products[product].price}</strong>
@@ -93,7 +89,7 @@ class ProductList {
     if (event.target.tagName == 'BUTTON') {
       if (confirm('Вы уверены, что хотите добавить этот товар в корзину?')) {
         let itemId = event.target.getAttribute('item-id');
-        //localStorage.setItem(this.productsStoreKey, '1');
+        localStorage.setItem(this.productsStoreKey, );
 
       } else {
         return false;
