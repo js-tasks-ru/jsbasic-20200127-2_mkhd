@@ -54,14 +54,7 @@ class Menu {
 
   showhideBackdrop(event, showBackdrop) {
     let backgr = document.getElementsByClassName('backdrop')[0].classList;
-
     showBackdrop ? backgr.remove('show') : backgr.add('show');
-
-    /*if ( showBackdrop ) {
-      document.getElementsByClassName('backdrop')[0].classList.remove('show');
-    } else {
-      document.getElementsByClassName('backdrop')[0].classList.add('show');
-    } */   
   }
 }
 

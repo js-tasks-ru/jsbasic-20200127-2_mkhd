@@ -5,10 +5,7 @@
  */
 function makeFriendsList(friends) {
 
-  
   let ul = document.createElement('ul');
-  //let li = document.createElement('li');
-  //let insideLi = 'qwe';
 
   for (let i = 0; i < friends.length; i++){
     let liNew = document.createElement('li');
@@ -17,13 +14,4 @@ function makeFriendsList(friends) {
   }
   return ul;
 
-    
-
-  //document.body.append(ul);
-  
-  /*
-  let listUl = document.createElement('ul');
-  let listLi = listUl.append('li');
-  listLi.innerHTML = `${friends[0].firstName}`;
-  document.body.append(list);  */
 }
