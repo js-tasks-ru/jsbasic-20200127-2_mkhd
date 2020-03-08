@@ -97,7 +97,7 @@ class ProductList {
           cartContents = JSON.stringify(products[itemId-1]);
         } else {
           if (!cartContents.includes(JSON.stringify(products[itemId-1]))){
-            cartContents = cartContents + ' ' + JSON.stringify(products[itemId-1]);
+            cartContents = cartContents + ',' + JSON.stringify(products[itemId-1]);
           }          
         }
         
@@ -108,8 +108,6 @@ class ProductList {
       }      
     }
   }
-
-
 }
 
 // Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
