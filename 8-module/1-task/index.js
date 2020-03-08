@@ -4,7 +4,7 @@ class ProductList {
 
   constructor(element) {
     this.el = element;    
-    this.el.addEventListener('click', event => this.addToCart(event));
+    //this.productsInCart = [];
   }
 
   show() {    
@@ -22,6 +22,7 @@ class ProductList {
       this.renderOuter();
       this.renderProduct(result);  
       this.renderReviews(result);
+      this.el.addEventListener('click', event => this.addToCart(event, result));
     });
   }
 
@@ -85,19 +86,27 @@ class ProductList {
     }
   }
 
-  addToCart(event) {
+  addToCart(event, products) {
     if (event.target.tagName == 'BUTTON') {
+      
       if (confirm('Вы уверены, что хотите добавить этот товар в корзину?')) {
-        let itemId = event.target.getAttribute('item-id');
-        localStorage.setItem(this.productsStoreKey, itemId);
-        alert(localStorage.length);  
+        let itemId = +event.target.getAttribute('item-id');
+        let cartContents = localStorage.getItem(this.productsStoreKey);
+
+        if (cartContents == null){
+          cartContents = JSON.stringify(products[itemId-1]);
+        } else {
+          if (!cartContents.includes(JSON.stringify(products[itemId-1]))){
+            cartContents = cartContents + ' ' + JSON.stringify(products[itemId-1]);
+          }          
+        }
+        
+        localStorage.setItem(this.productsStoreKey, cartContents);
 
       } else {
         return false;
-      }     
-      
+      }      
     }
-
   }
 
 
@@ -105,3 +114,4 @@ class ProductList {
 
 // Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
 window.ProductList = ProductList;
+
