@@ -22,7 +22,7 @@ class ProductList {
       this.renderOuter();
       this.renderProduct(result);  
       this.renderReviews(result);
-      this.el.addEventListener('click', event => this.addToCart(event, result));
+      this.el.addEventListener('click', event => this.addToCart1(event, result));
     });
   }
 
@@ -107,6 +107,30 @@ class ProductList {
         return false;
       }      
     }
+  }
+
+  addToCart1(event, products) {
+
+    if (event.target.tagName == 'BUTTON') {
+      
+      if (confirm('Вы уверены, что хотите добавить этот товар в корзину?')) {
+
+        let itemId = +event.target.getAttribute('item-id') - 1; 
+        let cartData = this.getCartData() || []; // получаем данные из Корзины или создаем пустой объект
+
+        cartData[itemId] = products[itemId];
+        this.setCartData(cartData);        
+      }
+    }    
+  }
+  // Получаем данные из LocalStorage
+  getCartData(){
+    return JSON.parse(localStorage.getItem(this.productsStoreKey));
+  }
+  // Записываем данные в LocalStorage
+  setCartData(o){
+    localStorage.setItem(this.productsStoreKey, JSON.stringify(o));
+    return false;
   }
 }
 
