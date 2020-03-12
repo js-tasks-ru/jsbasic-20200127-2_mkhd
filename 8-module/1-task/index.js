@@ -117,9 +117,12 @@ class ProductList {
 
         let itemId = +event.target.getAttribute('item-id') - 1; 
         let cartData = this.getCartData() || []; // получаем данные из Корзины или создаем пустой объект
+        
+        if(!cartData.find( item => item.id == products[itemId].id )) {
+          cartData.push(products[itemId]);
+          this.setCartData(cartData);
+        }
 
-        cartData[itemId] = products[itemId];
-        this.setCartData(cartData);        
       }
     }    
   }
@@ -128,11 +131,12 @@ class ProductList {
     return JSON.parse(localStorage.getItem(this.productsStoreKey));
   }
   // Записываем данные в LocalStorage
-  setCartData(o){
-    localStorage.setItem(this.productsStoreKey, JSON.stringify(o));
+  setCartData(data){
+    localStorage.setItem(this.productsStoreKey, JSON.stringify(data));
     return false;
   }
 }
+
 
 // Делает класс доступным глобально, сделано для упрощения, чтобы можно было его вызывать из другого скрипта
 window.ProductList = ProductList;
