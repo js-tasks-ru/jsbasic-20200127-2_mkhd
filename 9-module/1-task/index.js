@@ -82,9 +82,26 @@ class CheckoutProductList {
 
         let itemId = +event.target.getAttribute('item-id');
         let cartData = this.getCartData();
-        
+        console.log(cartData);
 
+        // удаляем элемент из хранилища
+        if(cartData.length == 1) {
+          localStorage.clear();
+        } else {
+          for (let i=0; i<cartData.length; i++) {
+            if(cartData[i].id == itemId) {
+              cartData.splice(i, 1);
+              this.setCartData(cartData);
+            }
+          }
+          
+          //cartData.splice( item => item == products[itemId].id, 1);
+          //this.setCartData(cartData);
+        }
         
+        // удаляем элемент из верстки
+        event.target.closest('div .product-wrapper').remove();
+                
       }
     }    
   }
@@ -95,8 +112,8 @@ class CheckoutProductList {
   }
 
   // Записываем данные в LocalStorage
-  setCartData(o){
-    localStorage.setItem(this.productsStoreKey, JSON.stringify(o));
+  setCartData(data){
+    localStorage.setItem(this.productsStoreKey, JSON.stringify(data));
     return false;
   }
 
